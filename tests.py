@@ -22,14 +22,6 @@ def test_result_output_for_failed_test(failed_result):
     assert failed_result.to_output() == 'path/to/failed/test FAILED\nerror message'
 
 
-def test_result_xml_for_passed_test(passed_result):
-    assert passed_result.to_xml() == '<testcase name="path/to/passed/test"></testcase>'
-
-
-def test_result_xml_for_failed_test(failed_result):
-    assert failed_result.to_xml() == '<testcase name="path/to/failed/test"><failure>error message</failure></testcase>'
-
-
 def test_xunit_report_with_no_tests():
     assert xunit_report(results=[], file_type='yaml') == '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="yaml" tests="0"></testsuite>'
 
