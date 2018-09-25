@@ -9,6 +9,9 @@ $(ACTIVATE): requirements.txt requirements_test.txt
 clean:
 	find . -name "*.pyc" -delete
 	find . -name "__pycache__" -delete
+	rm -rf build
+	rm -rf dist
+	rm -rf config_files_validator.egg-info
 
 .PHONY : static-analysis
 static-analysis: venv
