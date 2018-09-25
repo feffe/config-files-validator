@@ -16,7 +16,7 @@ setup(
     keywords="json yaml configuration config validator validation",
     url="https://github.com/feffe/config-files-validator",
     packages=['config_files'],
-    install_requires=[],
+    install_requires=['pyyaml'],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 4 - Beta",
