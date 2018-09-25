@@ -23,11 +23,11 @@ def test_result_output_for_failed_test(failed_result):
 
 
 def test_result_xml_for_passed_test(passed_result):
-    assert passed_result.to_xml() == '<testcase file="path/to/passed/test"></testcase>'
+    assert passed_result.to_xml() == '<testcase name="path/to/passed/test"></testcase>'
 
 
 def test_result_xml_for_failed_test(failed_result):
-    assert failed_result.to_xml() == '<testcase file="path/to/failed/test"><failure>error message</failure></testcase>'
+    assert failed_result.to_xml() == '<testcase name="path/to/failed/test"><failure>error message</failure></testcase>'
 
 
 def test_xunit_report_with_no_tests():
@@ -35,11 +35,11 @@ def test_xunit_report_with_no_tests():
 
 
 def test_xunit_report_with_no_failing_tests(passed_result):
-    assert xunit_report(results=[passed_result], file_type='yaml') == '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="yaml" tests="1"><testcase file="path/to/passed/test"></testcase></testsuite>'
+    assert xunit_report(results=[passed_result], file_type='yaml') == '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="yaml" tests="1"><testcase name="path/to/passed/test"></testcase></testsuite>'
 
 
 def test_xunit_report_with_failing_test(passed_result, failed_result):
-    assert xunit_report(results=[passed_result, failed_result], file_type='yaml') == '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="1" name="yaml" tests="2"><testcase file="path/to/passed/test"></testcase><testcase file="path/to/failed/test"><failure>error message</failure></testcase></testsuite>'
+    assert xunit_report(results=[passed_result, failed_result], file_type='yaml') == '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="1" name="yaml" tests="2"><testcase name="path/to/passed/test"></testcase><testcase name="path/to/failed/test"><failure>error message</failure></testcase></testsuite>'
 
 
 def test_valid_json():

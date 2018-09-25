@@ -1,3 +1,5 @@
+import os
+
 import yaml
 import json
 import argparse
@@ -16,8 +18,8 @@ class Result:
 
     def to_xml(self):
         if self.passed:
-            return f'<testcase file="{self.path}"></testcase>'
-        return f'<testcase file="{self.path}"><failure>{self.msg}</failure></testcase>'
+            return f'<testcase name="{self.path}"></testcase>'
+        return f'<testcase name="{self.path}"><failure>{self.msg}</failure></testcase>'
 
 
 def xunit_report(results, file_type):
@@ -66,6 +68,7 @@ def report_valid_files(file_type):
         print(result.to_output())
 
         if args.xunit:
+            os.makedirs(os.path.dirname(args.xunit_output_file), exist_ok=True)
             with open(args.xunit_output_file, 'w') as xunit_file:
                 xunit_file.write(xunit_report(results, file_type))
 
