@@ -1,7 +1,7 @@
 from io import StringIO
 
 import pytest
-from config_validator import Result, xunit_report, json_validation_result, yaml_validation_result
+from config_files.validator import Result, xunit_report, json_validation_result, yaml_validation_result
 
 
 @pytest.fixture
