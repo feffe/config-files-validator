@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="config-files-validator",
-    version="1.0.0-dev",
+    version="1.0.0",
     author="Fredrik Westermark",
     author_email="feffe.westermark@gmail.com",
     description="A validator for json and yaml files",
@@ -19,7 +19,7 @@ setup(
     install_requires=['pyyaml'],
     long_description=read('README.md'),
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Topic :: Software Development :: Quality Assurance",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
