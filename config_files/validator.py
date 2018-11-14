@@ -1,8 +1,9 @@
 import os
 
-import yaml
 import json
 import argparse
+import yaml
+import jinja2
 
 
 class Result:
@@ -53,6 +54,14 @@ def json_validation_result(file):
     return Result(passed=True, path=file.name)
 
 
+def jinja2_validation_result(file):
+    try:
+        jinja2.Environment().parse(file.read())
+    except jinja2.exceptions.TemplateSyntaxError as e:
+        return Result(passed=False, path=file.name, msg=str(e))
+    return Result(passed=True, path=file.name)
+
+
 def report_valid_files(file_type):
     args = parse_args()
     results = []
@@ -62,6 +71,8 @@ def report_valid_files(file_type):
                 result = yaml_validation_result(config_file)
             elif(file_type) == 'json':
                 result = json_validation_result(config_file)
+            elif (file_type) == 'jinja2':
+                result = jinja2_validation_result(config_file)
             else:
                 assert False
             results.append(result)
@@ -81,3 +92,7 @@ def report_valid_json_files():
 
 def report_valid_yaml_files():
     report_valid_files('yaml')
+
+
+def report_valid_jinja2_files():
+    report_valid_files('jinja2')

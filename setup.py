@@ -16,7 +16,7 @@ setup(
     keywords="json yaml configuration config validator validation",
     url="https://github.com/feffe/config-files-validator",
     packages=['config_files'],
-    install_requires=['pyyaml'],
+    install_requires=['pyyaml', 'jinja2', 'MarkupSafe'],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -27,7 +27,8 @@ setup(
     entry_points={
         'console_scripts': [
             'validate-json-files = config_files.validator:report_valid_json_files',
-            'validate-yaml-files = config_files.validator:report_valid_yaml_files'
+            'validate-yaml-files = config_files.validator:report_valid_yaml_files',
+            'validate-jinja2-files = config_files.validator:report_valid_jinja2_files',
         ]
     },
     python_requires='>=3.6',
