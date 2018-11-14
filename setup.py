@@ -8,12 +8,12 @@ def read(fname):
 
 setup(
     name="config-files-validator",
-    version="1.0.0",
+    version="1.1.0",
     author="Fredrik Westermark",
     author_email="feffe.westermark@gmail.com",
-    description="A validator for json and yaml files",
+    description="A validator for json, yaml, and jinja2 files",
     license="MIT",
-    keywords="json yaml configuration config validator validation",
+    keywords="json yaml jinja2 configuration config template templates validator validation",
     url="https://github.com/feffe/config-files-validator",
     packages=['config_files'],
     install_requires=['pyyaml', 'jinja2', 'MarkupSafe'],
