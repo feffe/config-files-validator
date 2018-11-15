@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="config-files-validator",
-    version="1.1.0",
+    version="1.2.0",
     author="Fredrik Westermark",
     author_email="feffe.westermark@gmail.com",
     description="A validator for json, yaml, and jinja2 files",

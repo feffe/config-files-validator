@@ -63,6 +63,7 @@ def jinja2_validation_result(file):
 
 
 def report_valid_files(file_type):
+    failed = False
     args = parse_args()
     results = []
     for file_name in args.files:
@@ -75,6 +76,8 @@ def report_valid_files(file_type):
                 result = jinja2_validation_result(config_file)
             else:
                 assert False
+            if not result.passed:
+                failed = True
             results.append(result)
         print(result.to_output())
 
@@ -84,6 +87,9 @@ def report_valid_files(file_type):
                 os.makedirs(xunit_folder, exist_ok=True)
             with open(args.xunit_output_file, 'w') as xunit_file:
                 xunit_file.write(xunit_report(results, file_type))
+
+    if failed:
+        exit(1)
 
 
 def report_valid_json_files():
