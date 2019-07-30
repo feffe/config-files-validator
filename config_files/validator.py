@@ -65,7 +65,7 @@ def json_validation_result(file):
 
 def jinja2_validation_result(file):
     try:
-        jinja2.Environment().parse(file.read())
+        jinja2.Environment(autoescape=True).parse(file.read())
     except jinja2.exceptions.TemplateSyntaxError as e:
         return Result(passed=False, path=file.name, msg=str(e))
     return Result(passed=True, path=file.name)
