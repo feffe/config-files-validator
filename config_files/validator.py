@@ -77,13 +77,13 @@ def report_valid_files(file_type):
     results = []
     for file_name in args.files:
         with open(file_name, "r") as config_file:
-            if (file_type) == "yaml":
+            if file_type == "yaml":
                 result = yaml_validation_result(config_file)
-            elif (file_type) == "json":
+            elif file_type == "json":
                 result = json_validation_result(config_file)
-            elif (file_type) == "jinja2":
+            elif file_type == "jinja2":
                 result = jinja2_validation_result(config_file)
-            elif (file_type) == "toml":
+            elif file_type == "toml":
                 result = toml_validation_result(config_file)
             else:
                 assert False
