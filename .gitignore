@@ -1,7 +1,8 @@
 *.egg-info
-.idea/
+.idea
 .tox
 __pycache__
-build/
-dist/
-venv/
+build
+dist
+pip-wheel-metadata
+venv
