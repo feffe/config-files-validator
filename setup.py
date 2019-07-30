@@ -29,6 +29,7 @@ setup(
             'validate-json-files = config_files.validator:report_valid_json_files',
             'validate-yaml-files = config_files.validator:report_valid_yaml_files',
             'validate-jinja2-files = config_files.validator:report_valid_jinja2_files',
+            'validate-toml-files = config_files.validator:report_valid_toml_files',
         ]
     },
     python_requires='>=3.6',

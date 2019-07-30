@@ -4,6 +4,7 @@ import json
 import argparse
 import yaml
 import jinja2
+import toml
 
 
 class Result:
@@ -36,6 +37,14 @@ def parse_args():
     parser.add_argument('--xunit-output-file', help='Xunit result file name', default='testreport.xml')
     parser.add_argument('files', nargs='+')
     return parser.parse_args()
+
+
+def toml_validation_result(file):
+    try:
+        toml.load(file)
+    except toml.TomlDecodeError as e:
+        return Result(passed=False, path=file.name, msg=str(e))
+    return Result(passed=True, path=file.name)
 
 
 def yaml_validation_result(file):
@@ -74,6 +83,8 @@ def report_valid_files(file_type):
                 result = json_validation_result(config_file)
             elif (file_type) == 'jinja2':
                 result = jinja2_validation_result(config_file)
+            elif (file_type) == 'toml':
+                result = toml_validation_result(config_file)
             else:
                 assert False
             if not result.passed:
@@ -102,3 +113,7 @@ def report_valid_yaml_files():
 
 def report_valid_jinja2_files():
     report_valid_files('jinja2')
+
+
+def report_valid_toml_files():
+    report_valid_files('toml')

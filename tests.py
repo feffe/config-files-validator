@@ -2,7 +2,7 @@ from io import StringIO
 
 import pytest
 from config_files.validator import Result, xunit_report, json_validation_result, yaml_validation_result, \
-    jinja2_validation_result
+    jinja2_validation_result, toml_validation_result
 
 
 @pytest.fixture
@@ -69,3 +69,15 @@ def test_invalid_jinja2():
     j2 = StringIO('{% for a in b %}')
     j2.name = 'path/to/file'
     assert not jinja2_validation_result(j2).passed
+
+
+def test_valid_toml():
+    toml = StringIO('a = "b"')
+    toml.name = 'path/to/file'
+    assert toml_validation_result(toml).passed
+
+
+def test_invalid_toml():
+    toml = StringIO('a = b')
+    toml.name = 'path/to/file'
+    assert not toml_validation_result(toml).passed
