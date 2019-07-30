@@ -16,7 +16,7 @@ setup(
     keywords="json yaml jinja2 configuration config template templates validator validation",
     url="https://github.com/feffe/config-files-validator",
     packages=['config_files'],
-    install_requires=['pyyaml', 'jinja2', 'MarkupSafe'],
+    install_requires=['pyyaml', 'jinja2'],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
