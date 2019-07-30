@@ -1,0 +1,3 @@
+[bandit]
+skips: B101
+exclude: /.git,/.idea,/.tox,/__pycache__,tests.py,/venv

@@ -16,6 +16,7 @@ clean:
 .PHONY : lint
 lint: venv
 	. $(ACTIVATE); flake8
+	. $(ACTIVATE); bandit . -r
 
 .PHONY : test
 test: venv
