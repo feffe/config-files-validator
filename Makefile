@@ -13,9 +13,9 @@ clean:
 	rm -rf dist
 	rm -rf config_files_validator.egg-info
 
-.PHONY : static-analysis
-static-analysis: venv
-	. $(ACTIVATE); flake8 .
+.PHONY : lint
+lint: venv
+	. $(ACTIVATE); flake8
 
 .PHONY : test
 test: venv

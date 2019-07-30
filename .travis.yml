@@ -1,0 +1,30 @@
+language: python
+
+matrix:
+  include:
+    - name: py36
+      python: 3.6
+      env: TOXENV=py36
+    - name: py37
+      python: 3.7
+      dist: xenial
+      sudo: true
+      env: TOXENV=py37
+    - name: lint
+      python: 3.7
+      dist: xenial
+      sudo: true
+      env: TOXENV=lint
+
+install:
+  - pip install tox
+
+script:
+  - tox
+
+git:
+  depth: 1
+
+notifications:
+  email:
+    - feffe.westermark@gmail.com
