@@ -1,9 +1,9 @@
 ACTIVATE=venv/bin/activate
 
 venv: $(ACTIVATE)
-$(ACTIVATE): requirements.txt requirements_test.txt
+$(ACTIVATE): requirements.txt requirements_dev.txt
 	test -d venv || virtualenv venv
-	. $(ACTIVATE); pip install -r requirements.txt -r requirements_test.txt
+	. $(ACTIVATE); pip install -r requirements_dev.txt
 
 .PHONY : clean
 clean:
