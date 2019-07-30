@@ -49,7 +49,7 @@ def toml_validation_result(file):
 
 def yaml_validation_result(file):
     try:
-        yaml.load(file)
+        yaml.full_load(file)
     except yaml.YAMLError as e:
         return Result(passed=False, path=file.name, msg=str(e))
     return Result(passed=True, path=file.name)
