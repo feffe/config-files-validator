@@ -1,6 +1,7 @@
 from io import StringIO
 
 import pytest
+
 from config_files.validator import (
     Result,
     xunit_report,
@@ -9,6 +10,10 @@ from config_files.validator import (
     jinja2_validation_result,
     toml_validation_result,
 )
+
+
+def unprettyfy_xml(xml):
+    return xml.replace("\t", "").replace("\n", "")
 
 
 @pytest.fixture
@@ -30,20 +35,18 @@ def test_result_output_for_failed_test(failed_result):
 
 
 def test_xunit_report_with_no_tests():
-    expected_report = (
-        '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="yaml" tests="0"></testsuite>'
-    )
-    assert xunit_report(results=[], file_type="yaml") == expected_report
+    expected_report = '<?xml version="1.0" ?><testsuites disabled="0" errors="0" failures="0" tests="0" time="0.0"><testsuite disabled="0" errors="0" failures="0" name="yaml" skipped="0" tests="0" time="0"/></testsuites>'
+    assert unprettyfy_xml(xunit_report(results=[], file_type="yaml")) == expected_report
 
 
 def test_xunit_report_with_no_failing_tests(passed_result):
-    expected_report = '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="yaml" tests="1"><testcase name="path/to/passed/test"></testcase></testsuite>'
-    assert xunit_report(results=[passed_result], file_type="yaml") == expected_report
+    expected_report = '<?xml version="1.0" ?><testsuites disabled="0" errors="0" failures="0" tests="1" time="0.0"><testsuite disabled="0" errors="0" failures="0" name="yaml" skipped="0" tests="1" time="0"><testcase name="path/to/passed/test"/></testsuite></testsuites>'
+    assert unprettyfy_xml(xunit_report(results=[passed_result], file_type="yaml")) == expected_report
 
 
 def test_xunit_report_with_failing_test(passed_result, failed_result):
-    expected_report = '<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="1" name="yaml" tests="2"><testcase name="path/to/passed/test"></testcase><testcase name="path/to/failed/test"><failure>error message</failure></testcase></testsuite>'
-    assert xunit_report(results=[passed_result, failed_result], file_type="yaml") == expected_report
+    expected_report = '<?xml version="1.0" ?><testsuites disabled="0" errors="0" failures="1" tests="2" time="0.0"><testsuite disabled="0" errors="0" failures="1" name="yaml" skipped="0" tests="2" time="0"><testcase name="path/to/passed/test"/><testcase name="path/to/failed/test"><failure message="error message" type="failure"/></testcase></testsuite></testsuites>'
+    assert unprettyfy_xml(xunit_report(results=[passed_result, failed_result], file_type="yaml")) == expected_report
 
 
 def test_valid_json():

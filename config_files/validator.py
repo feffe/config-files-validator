@@ -5,30 +5,31 @@ import argparse
 import yaml
 import jinja2
 import toml
+from junit_xml import TestCase, TestSuite
 
 
 class Result:
     def __init__(self, passed, path, msg=""):
-        self.passed = passed
-        self.path = path
         self.msg = msg
+        self.test_case = TestCase(name=path)
+        if not passed:
+            assert msg
+            self.test_case.add_failure_info(message=msg)
 
     def to_output(self):
-        if self.passed:
-            return f"{self.path} PASSED"
-        return f"{self.path} FAILED\n{self.msg}"
+        if self.test_case.is_failure():
+            return f"{self.test_case.name} FAILED\n{self.test_case.failure_message}"
+        return f"{self.test_case.name} PASSED"
 
-    def to_xml(self):
-        if self.passed:
-            return f'<testcase name="{self.path}"></testcase>'
-        return f'<testcase name="{self.path}"><failure>{self.msg}</failure></testcase>'
+    @property
+    def passed(self):
+        return not self.test_case.is_failure()
 
 
 def xunit_report(results, file_type):
-    nr_of_tests = len(results)
-    nr_of_fails = len([result for result in results if not result.passed])
-    test_cases = "".join([result.to_xml() for result in results])
-    return f'<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="{nr_of_fails}" name="{file_type}" tests="{nr_of_tests}">{test_cases}</testsuite>'
+    test_cases = [result.test_case for result in results]
+    test_suite = TestSuite(test_cases=test_cases, name=file_type)
+    return TestSuite.to_xml_string(test_suites=[test_suite])
 
 
 def parse_args():
