@@ -88,7 +88,7 @@ def test_invalid_jinja2():
 def test_valid_jinja2_with_extension():
     j2 = StringIO("{% do navigation.append('a string') %}")
     j2.name = "path/to/file"
-    assert jinja2_validation_result(j2, extensions=['jinja2.ext.do']).passed
+    assert jinja2_validation_result(j2, extensions=["jinja2.ext.do"]).passed
 
 
 def test_invalid_jinja2_without_extension():

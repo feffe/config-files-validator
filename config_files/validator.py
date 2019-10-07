@@ -78,7 +78,7 @@ def report_valid_files(file_type):
     args = parse_args()
     j2_extensions = []
     if args.j2_extensions:
-        j2_extensions = args.j2_extensions.split(',')
+        j2_extensions = args.j2_extensions.split(",")
     results = []
     for file_name in args.files:
         with open(file_name, "r") as config_file:
