@@ -17,6 +17,11 @@ validate-yaml-files example1.yaml example2.yaml
 validate-jinja2-files example1.j2 example2.j2
 ```
 
+## Example of usage with jinja2 files and extensions
+```
+validate-jinja2-files --j2-extensions=jinja2.ext.do,jinja2.ext.i18n example1.j2 example2.j2
+```
+
 ## Example of usage with toml files
 ```
 validate-toml-files example1.toml example2.toml

@@ -85,6 +85,18 @@ def test_invalid_jinja2():
     assert not jinja2_validation_result(j2).passed
 
 
+def test_valid_jinja2_with_extension():
+    j2 = StringIO("{% do navigation.append('a string') %}")
+    j2.name = "path/to/file"
+    assert jinja2_validation_result(j2, extensions=['jinja2.ext.do']).passed
+
+
+def test_invalid_jinja2_without_extension():
+    j2 = StringIO("{% do navigation.append('a string') %}")
+    j2.name = "path/to/file"
+    assert not jinja2_validation_result(j2).passed
+
+
 def test_valid_toml():
     toml = StringIO('a = "b"')
     toml.name = "path/to/file"

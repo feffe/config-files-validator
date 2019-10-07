@@ -36,6 +36,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--xunit", help="Generate xunit result file", action="store_true")
     parser.add_argument("--xunit-output-file", help="Xunit result file name", default="testreport.xml")
+    parser.add_argument("--j2-extensions", help="Comma separated list of jinja2 extensions")
     parser.add_argument("files", nargs="+")
     return parser.parse_args()
 
@@ -64,9 +65,9 @@ def json_validation_result(file):
     return Result(passed=True, path=file.name)
 
 
-def jinja2_validation_result(file):
+def jinja2_validation_result(file, extensions=[]):
     try:
-        jinja2.Environment(autoescape=True).parse(file.read())
+        jinja2.Environment(autoescape=True, extensions=extensions).parse(file.read())
     except jinja2.exceptions.TemplateSyntaxError as e:
         return Result(passed=False, path=file.name, msg=str(e))
     return Result(passed=True, path=file.name)
@@ -75,6 +76,9 @@ def jinja2_validation_result(file):
 def report_valid_files(file_type):
     failed = False
     args = parse_args()
+    j2_extensions = []
+    if args.j2_extensions:
+        j2_extensions = args.j2_extensions.split(',')
     results = []
     for file_name in args.files:
         with open(file_name, "r") as config_file:
@@ -83,7 +87,7 @@ def report_valid_files(file_type):
             elif file_type == "json":
                 result = json_validation_result(config_file)
             elif file_type == "jinja2":
-                result = jinja2_validation_result(config_file)
+                result = jinja2_validation_result(config_file, extensions=j2_extensions)
             elif file_type == "toml":
                 result = toml_validation_result(config_file)
             else:
