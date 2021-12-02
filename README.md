@@ -39,3 +39,5 @@ validate-yaml-files example1.yaml example2.yaml --xunit --xunit-output-file=myxu
 
 ## Requirements
 The tool requires version 3.8 or higher of Python.
+
+![ci](https://github.com/feffe/config-files-validator/workflows/CI/badge.svg?branch=master)
