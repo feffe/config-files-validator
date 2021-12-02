@@ -38,4 +38,4 @@ validate-yaml-files example1.yaml example2.yaml --xunit --xunit-output-file=myxu
 ```
 
 ## Requirements
-The tool requires version 3.6 or higher of Python.
+The tool requires version 3.8 or higher of Python.

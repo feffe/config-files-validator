@@ -5,7 +5,7 @@ import argparse
 import yaml
 import jinja2
 import toml
-from junit_xml import TestCase, TestSuite
+from junit_xml import TestCase, TestSuite, to_xml_report_string
 
 
 class Result:
@@ -18,7 +18,7 @@ class Result:
 
     def to_output(self):
         if self.test_case.is_failure():
-            return f"{self.test_case.name} FAILED\n{self.test_case.failure_message}"
+            return f"{self.test_case.name} FAILED\n{self.test_case.failures[0]['message']}"
         return f"{self.test_case.name} PASSED"
 
     @property
@@ -29,7 +29,7 @@ class Result:
 def xunit_report(results, file_type):
     test_cases = [result.test_case for result in results]
     test_suite = TestSuite(test_cases=test_cases, name=file_type)
-    return TestSuite.to_xml_string(test_suites=[test_suite])
+    return to_xml_report_string([test_suite])
 
 
 def parse_args():
@@ -51,7 +51,7 @@ def toml_validation_result(file):
 
 def yaml_validation_result(file):
     try:
-        yaml.full_load(file)
+        list(yaml.full_load_all(file))
     except yaml.YAMLError as e:
         return Result(passed=False, path=file.name, msg=str(e))
     return Result(passed=True, path=file.name)

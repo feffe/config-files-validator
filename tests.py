@@ -45,7 +45,7 @@ def test_xunit_report_with_no_failing_tests(passed_result):
 
 
 def test_xunit_report_with_failing_test(passed_result, failed_result):
-    expected_report = '<?xml version="1.0" ?><testsuites disabled="0" errors="0" failures="1" tests="2" time="0.0"><testsuite disabled="0" errors="0" failures="1" name="yaml" skipped="0" tests="2" time="0"><testcase name="path/to/passed/test"/><testcase name="path/to/failed/test"><failure message="error message" type="failure"/></testcase></testsuite></testsuites>'
+    expected_report = '<?xml version="1.0" ?><testsuites disabled="0" errors="0" failures="1" tests="2" time="0.0"><testsuite disabled="0" errors="0" failures="1" name="yaml" skipped="0" tests="2" time="0"><testcase name="path/to/passed/test"/><testcase name="path/to/failed/test"><failure type="failure" message="error message"/></testcase></testsuite></testsuites>'
     assert unprettyfy_xml(xunit_report(results=[passed_result, failed_result], file_type="yaml")) == expected_report
 
 
@@ -63,6 +63,12 @@ def test_invalid_json():
 
 def test_valid_yaml():
     yaml = StringIO("a: b")
+    yaml.name = "path/to/file"
+    assert yaml_validation_result(yaml).passed
+
+
+def test_valid_multi_document_yaml():
+    yaml = StringIO("---\na: b\n---\nc: d")
     yaml.name = "path/to/file"
     assert yaml_validation_result(yaml).passed
 
