@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="config-files-validator",
-    version="1.4.0",
+    version="1.5.0",
     author="Fredrik Westermark",
     author_email="feffe.westermark@gmail.com",
     description="A validator for json, yaml, and jinja2 files",
@@ -32,5 +32,5 @@ setup(
             "validate-toml-files = config_files.validator:report_valid_toml_files",
         ]
     },
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )
